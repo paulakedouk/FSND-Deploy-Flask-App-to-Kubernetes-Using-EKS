@@ -1,12 +1,4 @@
 apiVersion: v1
-data:
-  mapRoles: |
-    - rolearn: arn:aws:iam::208661718903:role/UdacityFlaskDeployCBKubectlRole
-      username: build
-      groups:
-        - system:masters
-  mapUsers: |
-    []
 kind: ConfigMap
 metadata:
   creationTimestamp: "2019-11-09T13:10:41Z"
@@ -14,4 +6,17 @@ metadata:
   namespace: kube-system
   resourceVersion: "828"
   selfLink: /api/v1/namespaces/kube-system/configmaps/aws-auth
-  uid: 54cc4216-02f2-11ea-b324-0a15970af8bc
+  uid: 54cc4216-02f2-11ea-b324-0a15970af8bc 
+data:
+  mapRoles: |
+    - rolearn: arn:aws:iam::208661718903:role/UdacityFlaskDeployCBKubectlRole
+      username: build
+      groups:
+        - system:masters
+      - groups:
+        - system:bootstrappers
+        - system:nodes
+        rolearn: arn:aws:iam::208661718903:role/stack-deploy-CodeBuildServiceRole-1XDNCQPA80WK2
+        username: system:node:{{EC2PrivateDNSName}}
+  mapUsers: |
+    []
